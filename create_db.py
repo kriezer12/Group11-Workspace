@@ -23,3 +23,28 @@ def create_database_if_not_exists():
         if not database:
             print("No database name specified in the URI.")
             return False
+
+# create_db_part2.py
+# Part 2 by: Carl
+# Description: Second half of create_db.py
+
+        conn = mysql.connector.connect(host=host, user=user, password=password, port=port)
+        cur = conn.cursor()
+        cur.execute(
+            f"CREATE DATABASE IF NOT EXISTS {database}"
+            f"CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        )
+        print(f"Database {database} is ready.")
+        cur.close()
+        conn.close()
+        return True
+    except Error as e:
+        print(f"MySQL Error: {e}")
+        return False
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return False
+
+if _name_ == "_main_":
+    ok = create_database_if_not_exists()
+    print("Database creation", "succeeded." if ok else "failed.")
