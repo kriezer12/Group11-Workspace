@@ -1,6 +1,11 @@
 from flask import Flask, render_template
 from config import Config
+from models.db import db
+from models.user_model import user
+
 import os
+
+db.init_app(app)
 
 app = Flask(__name__)
 app.config.from_object(Config)
