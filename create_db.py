@@ -10,15 +10,18 @@ from config import Config
 
 def create_database_if_not_exists():
     try:
+        print(f"Database URI: {Config.SQLALCHEMY_DATABASE_URI}")
         url = make_url(Config.SQLALCHEMY_DATABASE_URI)
         if url.get_backend_name() != "mysql":
             print("The database backend is not MySQL. No action taken.")
             return False
         user = url.username or ""
         password = url.password or ""
-        host = url.host or ""
-        port = url.port or 5505
+        host = url.host or "localhost"
+        port = url.port or 3306
         database = url.database
+
+        print(f"Connection details - Host: {host}, Port: {port}, User: {user}, Database: {database}") 
 
         if not database:
             print("No database name specified in the URI.")
@@ -31,7 +34,7 @@ def create_database_if_not_exists():
         conn = mysql.connector.connect(host=host, user=user, password=password, port=port)
         cur = conn.cursor()
         cur.execute(
-            f"CREATE DATABASE IF NOT EXISTS {database}"
+            f"CREATE DATABASE IF NOT EXISTS {database} "
             f"CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
         )
         print(f"Database {database} is ready.")
@@ -45,6 +48,6 @@ def create_database_if_not_exists():
         print(f"Unexpected error: {e}")
         return False
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     ok = create_database_if_not_exists()
     print("Database creation", "succeeded." if ok else "failed.")

@@ -10,41 +10,41 @@ def seed_data():
             print("Starting database seeding")
 
             seed_users = [
-                students(
-                    id="1"
+                User(
+                    id=1,
                     first_name="John",
-                    middle_name="P."
+                    middle_name="P.",
                     last_name="Doe",
-                    email = db.Column(db.String(100), unique=True, nullable=False)
-                    password = db.Column(db.String(255), nullable=False)  # Should be hashed
-                    birthday = db.Column(db.Date, nullable=False)
-                    gender = db.Column(db.String(10))
-                    phone_number = db.Column(db.String(20))
-                    address = db.Column(db.String(255))
-                    student_id = db.Column(db.String(50), unique=True)
+                    email="johndoe@example.com",
+                    password=generate_password_hash("johndoe123"),
+                    birthday="2002-05-14",
+                    gender="Male",
+                    phone_number="+63-912-345-6789",
+                    address="Blk 12 Lot 5, Carmona Estates, Cavite, Philippines",
+                    student_id="PUPIT-2025-00123"
                 ),
             ]
 
-            for user in seed_users:
-                existing_user = User.query.filter_by(email=user.email).first()
+            for student in seed_users:
+                existing_user = User.query.filter_by(email=student.email).first()
                 if existing_user:
-                    print(f"Skipping existing user: {user.email}")
+                    print(f"Skipping existing user: {student.email}")
                     continue
-                db.session.add(user)
+                db.session.add(student)
 
             db.session.commit()
             print("Database seeded successfully")
         
         except IntegrityError as e:
-            db.session.rollback
+            db.session.rollback()
             print(f"Integrity error: {e}")
 
         except SQLAlchemyError as e:
-            db.session.rollback
+            db.session.rollback()
             print(f"SQLALCHEMY error: {e}")
         
         except Exception as e:
-            db.session.rollback
+            db.session.rollback()
             print(f"Unexpected error: {e}")
 
         finally:
