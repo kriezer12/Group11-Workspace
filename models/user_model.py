@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 
 
 class User(db.Model):
-    __students__ = "users"
+    __tablename__ = "students"
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
