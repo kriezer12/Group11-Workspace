@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register | Advance Programming</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
   <div class="container">
@@ -17,7 +17,7 @@
       <p class="group-id">Group 11</p>
       <div class="spacer"></div>
       <p>Already have an account?</p>
-      <a class="login-btn" href="#">Log in</a>
+      <a class="login-btn" href="{{ url_for('login') }}">Log in</a>
     </div>
     <div class="right">
       <div class="header-row">
